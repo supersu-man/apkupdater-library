@@ -1,0 +1,3 @@
+rootProject.name = "GitHubAPKUpdaterExample"
+include ':app'
+include ':GitHubAPKUpdater'
