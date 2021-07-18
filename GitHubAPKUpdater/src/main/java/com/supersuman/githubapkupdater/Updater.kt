@@ -32,7 +32,10 @@ class Updater(private val context: Activity, private val url: String) {
         var version = ""
         thread {
             val temp2 = response.split("label-latest")[1].split("list-style-none")[1]
-            version = temp2.split("version")[1].split("\"")[1]
+            version = temp2.split("title=\"")[1].split("\"")[0]
+            if ("v" in version){
+                version = version.replace("v","")
+            }
         }.join()
         return version
     }
