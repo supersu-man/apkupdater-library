@@ -4,7 +4,7 @@ Checks for the latest release in the GitHub repo and if latest apk release is fo
 If you also release APK files with every new release on GitHub just like me, this could be a very useful Library.
 
 # Requirements
-- Version name in Gradle and Tag version on GitHub needs to be same (adding 'v' is optional on GitHub Tag version).
+- Your App Version name in Gradle and your release Tag version on GitHub needs to be same (adding 'v' is optional in GitHub Tag version).
 
 Gradle:
 ```
