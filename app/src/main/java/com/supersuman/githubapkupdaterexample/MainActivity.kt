@@ -10,7 +10,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val textView : TextView = findViewById(R.id.textView)
 
         runOnUiThread {
             val updater = Updater(this,"https://github.com/supersu-man/Macronium/releases/latest")
