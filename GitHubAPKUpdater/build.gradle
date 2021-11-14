@@ -30,6 +30,19 @@ android {
         jvmTarget = '11'
     }
 }
+project.afterEvaluate {
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                groupId = 'com.supersuman.github-apk-updater'
+                artifactId = 'github-apk-updater'
+                version = '1.5'
+                from components.release
+            }
+        }
+    }
+}
+
 
 dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'
