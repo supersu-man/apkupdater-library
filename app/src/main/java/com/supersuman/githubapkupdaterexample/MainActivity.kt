@@ -4,22 +4,20 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.supersuman.githubapkupdater.Updater
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val coroutineScope = CoroutineScope(Dispatchers.IO)
 
-        runOnUiThread {
-            val updater = Updater(this,"https://github.com/supersu-man/Macronium/releases/latest")
-            if (updater.hasPermissionsGranted()){
-                checkForUpdates(updater)
-            } else{
-                updater.requestMyPermissions{
-                    checkForUpdates(updater)
-                }
-            }
+        coroutineScope.launch {
+            val updater = Updater(this@MainActivity,"https://github.com/supersu-man/Macronium/releases/latest")
+            checkForUpdates(updater)
         }
     }
 

@@ -15,80 +15,59 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import khttp.get
+import org.jsoup.Jsoup
 import kotlin.concurrent.thread
 
 
 class Updater(private val context: Activity, private val url: String) {
     lateinit var response: String
-    lateinit var title : String
 
     fun init(){
-        thread {
-            response = get(url).text
-        }.join()
+        response = get(url).text
     }
 
-    fun getLatestVersionFromGitHuB(): String {
-        var version = ""
-        thread {
-            val temp2 = response.split("label-latest")[1].split("list-style-none")[1]
-            version = temp2.split("title=\"")[1].split("\"")[0]
+    private fun getLatestVersionFromGitHuB(): String {
+        return try {
+            val document = Jsoup.parse(response)
+            var version = document.getElementsByAttributeValue("class", "ml-1")[0].text().trim()
             if ("v" in version){
                 version = version.replace("v","")
             }
-        }.join()
-        return version
+            version
+        }catch (e : Exception){
+            ""
+        }
     }
 
     fun isNewUpdateAvailable(function: () -> Unit) {
-        val versionName = context.packageManager
+        val currentVersionName = context.packageManager
             .getPackageInfo(context.packageName, 0).versionName
-        if (getLatestVersionFromGitHuB() != versionName) {
+        val latestVersion  = getLatestVersionFromGitHuB()
+        if ( latestVersion != "" && latestVersion!= currentVersionName) {
             function()
         }
     }
 
-    fun getAPKTitle(): String {
-        val temp2 = response.split("release-main-section")[1].split("Box Box--condensed")[1]
-        val temp3 = temp2.split("<a href=\"")
-        var temp4 = ""
-        for (i in temp3) {
-            if (".apk" in i) {
-                temp4 = i
-            }
-        }
-        val temp5 = temp4.split(
-            url.replace("latest", "").replace("https://github.com", "")
-        )[1].split("\"")[0]
-        val dlink = url.replace("latest", temp5)
-        title = dlink.split("download/")[1].split("/")[1]
-        return title
-    }
 
     fun requestDownload() {
-        thread {
-            val temp2 = response.split("release-main-section")[1].split("Box Box--condensed")[1]
-            val temp3 = temp2.split("<a href=\"")
-            var temp4 = ""
-            for (i in temp3) {
-                if (".apk" in i) {
-                    temp4 = i
-                }
+        val document = Jsoup.parse(response)
+        val list = document.getElementsByAttributeValue("class", "box-row")
+        var downloadLink = ""
+        var title = ""
+        for(i in list){
+            if ("apk" in i.text()){
+                title = i.getElementsByTag("a")[0].text()
+                downloadLink = i.getElementsByTag("a")[0].attr("href").toString()
             }
-            val temp5 = temp4.split(
-                url.replace("latest", "").replace("https://github.com", "")
-            )[1].split("\"")[0]
-            val dlink = url.replace("latest", temp5)
-            title = dlink.split("download/")[1].split("/")[1]
-            val request = DownloadManager.Request(Uri.parse(dlink))
-            val downloadManager =
-                context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-            request.setDescription("")
-            request.setTitle(title)
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, title)
-            downloadManager.enqueue(request)
-        }.join()
+        }
+        val request = DownloadManager.Request(Uri.parse("https://github.com/$downloadLink"))
+        val downloadManager =
+            context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        request.setDescription("")
+        request.setTitle(title)
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+        request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, title)
+        downloadManager.enqueue(request)
     }
 
     fun requestMyPermissions(function: () -> Unit){
@@ -111,10 +90,7 @@ class Updater(private val context: Activity, private val url: String) {
                     println(token)
                 }
             }).check()
-
     }
-
-
 
     fun hasPermissionsGranted(): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
