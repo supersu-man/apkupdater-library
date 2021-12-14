@@ -29,25 +29,27 @@ implementation 'com.github.supersu-man:GitHubAPKUpdater-Library:v1.1'
 ```
 
 # Usage
+### Usage in one of my Apps [here](https://github.com/supersu-man/WhySave/blob/main/app/src/main/java/com/supersuman/whysave/MainActivity.kt)
+### Simple implementation [here](https://github.com/supersu-man/GitHubAPKUpdater-Library/blob/main/app/src/main/java/com/supersuman/githubapkupdaterexample/MainActivity.kt)
 ### Example
 ```
 thread {
-    val updater = Updater(this,"https://github.com/supersu-man/Macronium/releases/latest")
-    if (updater.hasPermissionsGranted()){
-        checkForUpdates(updater)
-    } else{
-        updater.requestMyPermissions{
-            checkForUpdates(updater)
-        }
-    }
+    val updater = Updater(this, "Link_to_your_repo")
+    checkForUpdates(updater)
 }
 ```
 ```
-private fun checkForUpdates(updater: Updater){
+private fun checkForUpdates(updater: Updater) {
     if (updater.isInternetConnection()){
         updater.init()
         updater.isNewUpdateAvailable {
-            updater.requestDownload()
+            if (updater.hasPermissionsGranted()){
+                updater.requestDownload()
+            } else{
+                updater.requestMyPermissions {
+                    updater.requestDownload()
+                }
+            }
         }
     }
 }
