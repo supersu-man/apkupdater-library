@@ -15,18 +15,18 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val coroutineScope = CoroutineScope(Dispatchers.IO)
 
+        val url = "https://github.com/supersu-man/macronium-android/releases/latest"
+
         coroutineScope.launch {
-            val updater = Updater(this@MainActivity,"https://github.com/supersu-man/Macronium/releases/latest")
+            val updater = Updater(this@MainActivity, url)
+            updater.threeNumbers = true
             checkForUpdates(updater)
         }
     }
 
-    private fun checkForUpdates(updater: Updater){
-        if (updater.isInternetConnection()){
-            updater.init()
-            updater.isNewUpdateAvailable {
-                updater.requestDownload()
-            }
+    private fun checkForUpdates(updater: Updater) {
+        if (updater.isInternetConnection() && updater.isNewUpdateAvailable() == true) {
+            updater.requestDownload()
         }
     }
 

@@ -19,60 +19,37 @@ import org.jsoup.Jsoup
 import kotlin.concurrent.thread
 
 
-class Updater(private val context: Activity, private val url: String) {
-    lateinit var response: String
+class Updater(private val activity: Activity, url: String) {
+    private var response: String = get(url).text
+    var threeNumbers: Boolean = false
 
-    fun init(){
-        response = get(url).text
-    }
-
-    private fun getLatestVersionFromGitHuB(): String {
-        return try {
-            val document = Jsoup.parse(response)
-            var version = document.getElementsByAttributeValue("class", "ml-1")[0].text().trim()
-            if ("v" in version){
-                version = version.replace("v","")
-            }
-            version
-        }catch (e : Exception){
-            ""
+    fun isNewUpdateAvailable(): Boolean? {
+        val latestVersion = if (threeNumbers) {
+            Regex("[0-9]+\\.[0-9]+\\.[0-9]+").find(response)?.value
+        } else {
+            Regex("[0-9]+\\.[0-9]+").find(response)?.value
         }
-    }
-
-    fun isNewUpdateAvailable(function: () -> Unit) {
-        val currentVersionName = context.packageManager
-            .getPackageInfo(context.packageName, 0).versionName
-        val latestVersion  = getLatestVersionFromGitHuB()
-        if ( latestVersion != "" && latestVersion!= currentVersionName) {
-            function()
-        }
+        val currentVersionName = activity.packageManager.getPackageInfo(activity.packageName, 0).versionName
+        if (latestVersion != null) return latestVersion != currentVersionName
+        return null
     }
 
 
     fun requestDownload() {
-        val document = Jsoup.parse(response)
-        val list = document.getElementsByAttributeValue("class", "box-row")
-        var downloadLink = ""
-        var title = ""
-        for(i in list){
-            if ("apk" in i.text()){
-                title = i.getElementsByTag("a")[0].text()
-                downloadLink = i.getElementsByTag("a")[0].attr("href").toString()
-            }
-        }
-        val request = DownloadManager.Request(Uri.parse("https://github.com/$downloadLink"))
-        val downloadManager =
-            context.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-        request.setDescription("")
+        val src = Regex("\"http.+?expanded.+?\"").find(response)?.value?.removeSurrounding("\"") ?: return
+        val res = get(src).text
+        val apkLink = Regex("\".+?\\.apk\"").find(res)?.value?.removeSurrounding("\"") ?: return
+        val title = Regex(">.+?\\.apk<").find(res)?.value?.removeSurrounding(">", "<") ?: return
+        val request = DownloadManager.Request(Uri.parse("https://github.com/$apkLink"))
+        val downloadManager = activity.getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
         request.setTitle(title)
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, title)
         downloadManager.enqueue(request)
     }
 
-    fun requestMyPermissions(function: () -> Unit){
-        Dexter.withContext(context)
-            .withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    fun requestMyPermissions(function: () -> Unit) {
+        Dexter.withContext(activity).withPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             .withListener(object : PermissionListener {
                 override fun onPermissionGranted(response: PermissionGrantedResponse) {
                     function()
@@ -83,8 +60,7 @@ class Updater(private val context: Activity, private val url: String) {
                 }
 
                 override fun onPermissionRationaleShouldBeShown(
-                    permission: PermissionRequest?,
-                    token: PermissionToken?
+                    permission: PermissionRequest?, token: PermissionToken?
                 ) {
                     println(permission)
                     println(token)
@@ -93,9 +69,9 @@ class Updater(private val context: Activity, private val url: String) {
     }
 
     fun hasPermissionsGranted(): Boolean {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            return context.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-        }else{
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return activity.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+        } else {
             return true
         }
     }
@@ -106,7 +82,7 @@ class Updater(private val context: Activity, private val url: String) {
                 get("https://www.google.com/")
             }.join()
             true
-        } catch (e:Exception){
+        } catch (e: Exception) {
             false
         }
     }

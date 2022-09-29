@@ -4,7 +4,13 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/GitHubAPKUpdaterExample.iml" filepath="$PROJECT_DIR$/.idea/modules/GitHubAPKUpdaterExample.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/GitHubAPKUpdater/GitHubAPKUpdaterExample.GitHubAPKUpdater.iml" filepath="$PROJECT_DIR$/.idea/modules/GitHubAPKUpdater/GitHubAPKUpdaterExample.GitHubAPKUpdater.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GitHubAPKUpdater/GitHubAPKUpdaterExample.GitHubAPKUpdater.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/GitHubAPKUpdater/GitHubAPKUpdaterExample.GitHubAPKUpdater.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GitHubAPKUpdater/GitHubAPKUpdaterExample.GitHubAPKUpdater.main.iml" filepath="$PROJECT_DIR$/.idea/modules/GitHubAPKUpdater/GitHubAPKUpdaterExample.GitHubAPKUpdater.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/GitHubAPKUpdater/GitHubAPKUpdaterExample.GitHubAPKUpdater.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/GitHubAPKUpdater/GitHubAPKUpdaterExample.GitHubAPKUpdater.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/GitHubAPKUpdaterExample.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/GitHubAPKUpdaterExample.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/GitHubAPKUpdaterExample.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/GitHubAPKUpdaterExample.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/GitHubAPKUpdaterExample.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/GitHubAPKUpdaterExample.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/GitHubAPKUpdaterExample.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/GitHubAPKUpdaterExample.app.unitTest.iml" />
     </modules>
   </component>
 </project>
