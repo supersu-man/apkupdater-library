@@ -1,4 +1,4 @@
-package com.supersuman.githubapkupdater
+package com.supersuman.apkupdater
 
 import android.Manifest
 import android.app.Activity
@@ -15,11 +15,10 @@ import com.karumi.dexter.listener.PermissionGrantedResponse
 import com.karumi.dexter.listener.PermissionRequest
 import com.karumi.dexter.listener.single.PermissionListener
 import khttp.get
-import org.jsoup.Jsoup
 import kotlin.concurrent.thread
 
 
-class Updater(private val activity: Activity, url: String) {
+class ApkUpdater(private val activity: Activity, url: String) {
     private var response: String = get(url).text
     var threeNumbers: Boolean = false
 

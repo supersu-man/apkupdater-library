@@ -1,9 +1,8 @@
 package com.supersuman.githubapkupdaterexample
 
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.supersuman.githubapkupdater.Updater
+import com.supersuman.apkupdater.ApkUpdater
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,13 +17,13 @@ class MainActivity : AppCompatActivity() {
         val url = "https://github.com/supersu-man/macronium-android/releases/latest"
 
         coroutineScope.launch {
-            val updater = Updater(this@MainActivity, url)
+            val updater = ApkUpdater(this@MainActivity, url)
             updater.threeNumbers = true
             checkForUpdates(updater)
         }
     }
 
-    private fun checkForUpdates(updater: Updater) {
+    private fun checkForUpdates(updater: ApkUpdater) {
         if (updater.isInternetConnection() && updater.isNewUpdateAvailable() == true) {
             updater.requestDownload()
         }
