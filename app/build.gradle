@@ -8,7 +8,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.supersuman.githubapkupdaterexample"
+        applicationId "com.supersuman.apkupdaterdemo"
         minSdkVersion 21
         targetSdkVersion 32
         versionCode 3

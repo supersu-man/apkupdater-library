@@ -1,4 +1,4 @@
-package com.supersuman.githubapkupdater
+package com.supersuman.apkupdater
 
 import org.junit.Test
 

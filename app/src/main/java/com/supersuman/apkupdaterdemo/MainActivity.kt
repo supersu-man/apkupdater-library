@@ -1,8 +1,9 @@
-package com.supersuman.githubapkupdaterexample
+package com.supersuman.apkupdaterdemo
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.supersuman.apkupdater.ApkUpdater
+import com.supersuman.apkupdaterdemo.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.supersuman.githubapkupdaterexample
+package com.supersuman.apkupdaterdemo
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
