@@ -1,8 +1,5 @@
 name: Test Build
-on:
-  push:
-    tags-ignore:
-      - '**'
+on: push
 jobs:
   Build:
     name: Test and Build
