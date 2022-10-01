@@ -11,8 +11,8 @@ android {
         applicationId "com.supersuman.apkupdaterdemo"
         minSdkVersion 21
         targetSdkVersion 32
-        versionCode 3
-        versionName "1.2"
+        versionCode 4
+        versionName "2.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
