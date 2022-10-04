@@ -32,6 +32,5 @@ android {
 
 dependencies {
     implementation 'io.karn:khttp-android:0.1.0'
-    implementation "com.karumi:dexter:6.2.3"
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'junit:junit:4.13.2'
 }
