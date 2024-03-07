@@ -10,7 +10,6 @@ android {
 
     defaultConfig {
         minSdk = 21
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -32,7 +31,6 @@ android {
 dependencies {
 
     implementation("com.github.kittinunf.fuel:fuel:2.3.1")
-    implementation("androidx.test.ext:junit-ktx:1.1.5")
     testImplementation("junit:junit:4.13.2")
 
 }
