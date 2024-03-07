@@ -3,7 +3,6 @@ package com.supersuman.apkupdaterdemo
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.supersuman.apkupdater.ApkUpdater
-import com.supersuman.apkupdaterdemo.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,14 +17,18 @@ class MainActivity : AppCompatActivity() {
         val url = "https://github.com/supersu-man/macronium-android/releases/latest"
 
         coroutineScope.launch {
-            val updater = ApkUpdater(this@MainActivity, url)
-            updater.threeNumbers = true
-            checkForUpdates(updater)
+            try {
+                val updater = ApkUpdater(this@MainActivity, url)
+                updater.threeNumbers = true
+                checkForUpdates(updater)
+            } catch (e: Exception) {
+                println(e)
+            }
         }
     }
 
     private fun checkForUpdates(updater: ApkUpdater) {
-        if (updater.isInternetConnection() && updater.isNewUpdateAvailable() == true) {
+        if (updater.isNewUpdateAvailable() == true) {
             updater.requestDownload()
         }
     }

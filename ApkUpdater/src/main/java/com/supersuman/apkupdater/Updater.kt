@@ -5,12 +5,12 @@ import android.app.DownloadManager
 import android.content.Context
 import android.net.Uri
 import android.os.Environment
-import khttp.get
+import com.github.kittinunf.fuel.Fuel
 import kotlin.concurrent.thread
 
 
 class ApkUpdater(private val activity: Activity, url: String) {
-    private var response: String = get(url).text
+    private var response: String = Fuel.get(url).response().second.toString()
     var threeNumbers: Boolean = false
 
     fun isNewUpdateAvailable(): Boolean? {
@@ -26,7 +26,7 @@ class ApkUpdater(private val activity: Activity, url: String) {
 
     fun requestDownload() {
         val src = Regex("\"http.+?expanded.+?\"").find(response)?.value?.removeSurrounding("\"") ?: return
-        val res = get(src).text
+        val res = Fuel.get(src).response().second.toString()
         val apkLink = Regex("\".+?\\.apk\"").find(res)?.value?.removeSurrounding("\"") ?: return
         val title = Regex(">.+?\\.apk<").find(res)?.value?.removeSurrounding(">", "<") ?: return
         val request = DownloadManager.Request(Uri.parse("https://github.com/$apkLink"))
@@ -35,17 +35,6 @@ class ApkUpdater(private val activity: Activity, url: String) {
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
         request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, title)
         downloadManager.enqueue(request)
-    }
-
-    fun isInternetConnection(): Boolean {
-        return try {
-            thread {
-                get("https://www.google.com/")
-            }.join()
-            true
-        } catch (e: Exception) {
-            false
-        }
     }
 
 }
