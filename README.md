@@ -1,5 +1,5 @@
-# GitHubAPKUpdater-Library
-Checks for the latest release in the GitHub repo and if latest apk release is found, it downloads the apk for you.
+# APKUpdater-Library
+Checks for the latest release in your GitHub repo. Downloads latest apk if new release is found. 
 
 If you also release APK files with every new release on GitHub just like me, this could be a very useful Library.
 
@@ -29,7 +29,7 @@ allprojects {
 ```
 - Add this line in build.gradle
 ```
-implementation 'com.github.supersu-man:apkupdater-library:v2.0.0'
+implementation 'com.github.supersu-man:apkupdater-library:v2.1.0'
 ```
 
 # Usage
@@ -46,7 +46,7 @@ thread {
 ```
 ```
 private fun checkForUpdates(updater: ApkUpdater) {
-    if (updater.isInternetConnection() && updater.isNewUpdateAvailable() == true) {
+    if (updater.isNewUpdateAvailable() == true) {
         updater.requestDownload()
     }
 }
@@ -71,4 +71,4 @@ updater.isNewUpdateAvailable {
 updater.requestDownload()
 ```
 # Libraries Used 
-- [khttp](https://github.com/ascclemens/khttp#readme)
+- [Fuel](https://github.com/kittinunf/fuel)
