@@ -1,5 +1,6 @@
 plugins {
     id("com.android.library")
+    id("maven-publish")
     id("org.jetbrains.kotlin.android")
 }
 
@@ -20,12 +21,13 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
 }
 
 dependencies {
@@ -33,4 +35,14 @@ dependencies {
     implementation("com.github.kittinunf.fuel:fuel:2.3.1")
     testImplementation("junit:junit:4.13.2")
 
+}
+
+afterEvaluate {
+    publishing {
+        publications {
+            register<MavenPublication>("release") {
+                from(components["release"])
+            }
+        }
+    }
 }
