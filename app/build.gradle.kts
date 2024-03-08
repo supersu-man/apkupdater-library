@@ -10,8 +10,8 @@ android {
         applicationId = "com.supersuman.apkupdaterdemo"
         minSdk = 21
         targetSdk = 34
-        versionCode = 5
-        versionName = "2.0.1"
+        versionCode = 6
+        versionName = "2.1.0"
     }
 
     buildTypes {
