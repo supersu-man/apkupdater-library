@@ -56,10 +56,6 @@ private fun checkForUpdates(updater: ApkUpdater) {
 ```
 val updater = ApkUpdater(this@MainActivity, url)
 ```
-- Checking for Internet connection
-```
-updater.isInternetConnection()
-```
 - Checking for new update (if the versionName and latest tag don't match it detects as new update)
 ```
 updater.isNewUpdateAvailable {
