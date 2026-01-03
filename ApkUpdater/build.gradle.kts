@@ -1,9 +1,10 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     id("com.android.library")
     id("maven-publish")
     id("org.jetbrains.kotlin.android")
 }
-
 
 android {
     namespace = "com.supersuman.apkupdater"
@@ -21,20 +22,20 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
+}
 
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
+    }
 }
 
 dependencies {
-
     implementation("com.github.kittinunf.fuel:fuel:2.3.1")
     testImplementation("junit:junit:4.13.2")
-
 }
 
 afterEvaluate {
