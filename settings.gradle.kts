@@ -17,5 +17,4 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "ApkUpdaterDemo"
-include(":app")
 include(":ApkUpdater")
