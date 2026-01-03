@@ -6,12 +6,12 @@ plugins {
 }
 android {
     namespace = "com.supersuman.apkupdaterdemo"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.supersuman.apkupdaterdemo"
         minSdk = 21
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 6
         versionName = "2.1.0"
     }
